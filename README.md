@@ -14,8 +14,11 @@ Feel free to pop the solution open and build however you want, but if you don't 
 
 ```
 git clone https://github.com/hewisaurus/steamguard-webhooks.git c:\steamguard
+
 cd c:\steamguard
+
 dotnet publish src/steamguard.sln --framework net8.0 --runtime win-x64 -c Release
+
 mv C:\steamguard\src\Steamguard\bin\Release\net8.0\win-x64\publish\* .
 ```
 
