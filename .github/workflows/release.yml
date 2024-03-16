@@ -34,4 +34,26 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+      - name: publish
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="v$tag-win-x64"
+
+          # Build everything
+          dotnet publish src/Steamguard/Steamguard.csproj --framework net8.0 -c ${{ matrix.configuration }} -o "$release_name"
+
+          # Pack files
+          7z a -tzip "${release_name}.zip" "./${release_name}/*"
+
+          # Delete output directory
+          rm -r "$release_name"
+
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "v*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
